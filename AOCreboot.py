@@ -1,119 +1,202 @@
-# AOC script combining previous deparate files for each day
+# AOC script combining previous separate files for each day
 import pandas as pd
-
 """ 25 challenges (day1 to day25) """
 
-#  +-+-+-+-+-  day 1 +-+-+-+-+- 
+class AOC2021:   
+    # additional methods to be added later 
 
-class AOC2021: 
-        pass
-# additional methods to be added later 
+    def __init__(self, data_path):
+        self.first_illegal_character = None
+        self.data_path = data_path
+        self.sort_by_index = data_path
+        
+    # data_path is now defined and can be used  anywhere in the class by calling self.data_path    
 
-"""  write a method to open a txt.file with one data point on each line and convert to int and return a list """
-def open_data_file(self, data_path):
-    data_file = []
-    f = open(data_path)
-    for line in f:
-        data_file.append(int(line))
-    return data_file
-   
-self = "where is the data located"  # define befoe __init ??
-def __init__(self):
-     self.first_illegal_character = None
-def __init__(self, data_path):
-     self.data_path = data_path
-    
+    # write a method to open a txt.file with one data point on each line and convert to int and return a list   
+    # def open_data_file(self, data_path):
+    def open_data_file(self):
+        data_file = []
+        # f = open(data_path)
+        f = open(self.data_path)
+        for line in f:
+            data_file.append(int(line))
+        return data_file
+
+    # write a method to convert a list to a dictionary
+    # def list_to_dictionary(self, open_data_file):
+    def list_to_dictionary(self, data_file):
+        keys = []
+        for k in range(len(data_file)):
+            # keys += k  # int not interable
+            keys += str(k)
+        print ("keys = ", keys)
+        
+        list_to_dictionary = dict(zip(keys, data_file))
+        print(list_to_dictionary)
+        return(list_to_dictionary)
+
+# write a method to print a column of binary strings without losing the leading zeros  
+    def open_binary_list(self):
+        data_list = []
+        f = open(self.data_path)
+        for  line in f:
+            data_list.append(line.strip())
+            # print(data_file)
+        return data_list
+
+# write a method to sort a list of binary numbers
+    def sort_binary_list(self, my_list, bit_position):
+        column_counter = 0
+        for k in range(5):  # 5 for example data, 12 for actual data
+            column_counter = 0
+            for item in my_list:
+                # print("current item = " , [item])
+                bit_position = k
+                column_counter += (int(item [bit_position]))
+                # print("column_counter = ",column_counter)
+                if column_counter >= (len(my_list)/2):
+                    most_common = 1
+                    least_common = 0
+                else:
+                    least_common = 1
+                    most_common = 0
+            print("for bit_position ",bit_position," most_common = ",most_common, " least_common = ", least_common)
+        return most_common, least_common 
+
+# call the class
+my_data_path = "/Users/rsq2/Code_projects/2021-Challenge/input_data/day3_example.txt"
+# call the class
+aoc = AOC2021(data_path = my_data_path)   
+#call the method
+my_list = (aoc.open_binary_list())
+print(my_list)
+bit_position = len(my_list)
+sort_binary_list = (aoc.sort_binary_list(my_list, bit_position))
+
+#    =-=-=-=-  day 1 =-=-=-       
+# my_data_path = "/Users/rsq2/Code_projects/2021-Challenge/input_data/day1_example.txt"
+# my_data_path = "/Users/rsq2/Code_projects/2021-Challenge/input_data/day1.txt"
+# call the class
+# aoc = AOC2021(data_path = my_data_path)
 # call the method
-# data_path = "/Users/rsq2/Code_projects/2021-Challenge/input_data/day1_example.txt"
+# day1_example_data = aoc.open_data_file()
+day1_data = aoc.open_data_file()
+
+ 
 # day1_example_data = self.data_path
 # day1_example_data = data_path("/Users/rsq2/Code_projects/2021-Challenge/input_data/day1_example.txt")
 
-
-"""  the method will not run as currently written
-error message   "NameError: name 'self' is not defined" 
-error message for line 29 " TypeError: 'str' object is not callable"
-error message for line 28 AttributeError: 'str' object has no attribute 'data_path'
-
-"""
- 
-
-""" very klutzy function to open a txt.file with one data point on each line and convert to int and return a list """
-# def open_data_list(self, data_path):
-def open_data_file(data_path):
-    clean_list=[]
-    data_list = []
-    string_list = []
-    f = open(data_path)
-    for line in f:
-        # new_line = line.strip()
-        # new_data = int(new_line)
-        string_list.append(line)
-        # data_list.append(int(line))  - gives error message
-        # print(string_list)
-    for sub in string_list:
-        clean_list.append(sub.replace("\n", ""))
-    # print(clean_list)
-    for item in clean_list:
-        data_list.append(int(item)) 
-    
-    # print("data file = " ,data_list)
-    return data_list
-
-''' read and inspect the data file list     '''
-# data_path = "/Users/rsq2/Code_projects/2021-Challenge/input_data/day1_example.txt"
-# day1_example_data = open_data_file("/Users/rsq2/Code_projects/2021-Challenge/input_data/day1_example.txt")
-# print(day1_example_data)
-# print(len(day1_example_data))
-
-data_path = "/Users/rsq2/Code_projects/2021-Challenge/input_data/day1.txt"
-day1_data = open_data_file("/Users/rsq2/Code_projects/2021-Challenge/input_data/day1.txt")
-print(len(day1_data))
-
-
-''' convert the list to a dictionary '''
-keys =[]
-
-# for k in range(len(day1_example_data)):
-    # keys += (str(k))   # fix int to str here
-for k in range(0,len(day1_data)):
-    keys += (str(k))   # fix int to str here
-# print("keys = ", keys)
-
-"""  try zip function  """
-# day1_depth_readings = dict(zip(keys, day1_example_data))
-day1_depth_readings = dict(zip(keys, day1_data))
-# print("day1_depths = ", day1_depth_readings)
-
-"""     solve the puzzle using the example data   
-def count_depth_increases (dictionary):
-    counter = 0 
-    for i in range (0,len(dictionary)-1): # for part 1
-    # for i in range (0,len(dictionary)-3): # for part 2
-        change = day1_depth_readings[(i)+1] - day1_depth_readings[(i)]    # for part 1
-        # change = day1_depth_readings[(i)+ 3] - day1_depth_readings[(i)]     # for part 2
+def count_depth_increases(my_list):
+    counter = 0
+    my_list = day1_data
+    # my_list = day1_data
+    print("len =", len)
+    # for i in range (0,len(my_list)-1): # for part 1
+    # for i in range (0, len(day1_depth_readings)-1): # for part1
+    for i in range (0,len(my_list)-3): # for part 2  
+        # change = day1_data[(i)+1] - day1_data[(i)]    # for part 1
+        change = day1_data[(i)+ 3] - day1_data[(i)]     # for part 2
+        # print("change = ", change)
         if change > 0:
             counter +=1
         # print("counter = ", counter)
     print("The number of depth increases =" , counter)
 
-count_depth_increases(day1_depth_readings)
+count_depth_increases(day1_data)
+ #returned 7 which is correct for example data 
 
- returned 7 which is correct for example data """
 
-"""   now solve using day1.txt  
+# now solve using day1.txt  
 # manually comment out calls to day1_example data
 # and replace with calls to day1.txt immediately below that line 
 
-returned 1167 which is correct for day1_data  """
+# returned 1451 which is correct for day1_data
 
-""" part 2   - change the depth increase definition to 3 steps   note that (day2+day3+day4) -(day1+day2+day3) is equal to day4 - day1 """
 
-"""  returned 1130 which is correct for part 2  """
+# part 2   - change the depth increase definition to 3 steps   note that (day2+day3+day4) -(day1+day2+day3) is equal to day4 - day1 
+
+
+# returned 1395 which is correct for part 2  
+  
+# +_+_+_+_+_+_ day 2 _+_+_+_+_+_+_
+# my_data_path = "/Users/rsq2/Code_projects/2021-Challenge/input_data/day2_example.txt"
+my_data_path = "/Users/rsq2/Code_projects/2021-Challenge/input_data/day2.txt"
+
+day2_data = pd.read_csv(my_data_path, header=None)
+print ("This is the day2 input data for the challenge <br> ",day2_data.head)
+# get description of data
+print (day2_data.dtypes)
+
+# convert to list using tolist() function
+# ls = df.day2_data.tolist()   values is required
+ls = day2_data.values.tolist()   #.valuesis required
+
+# combine list of lists into a single list aka "flatten the list" via list comprehension
+flat_ls = []
+for i in ls:
+   for j in i:
+        flat_ls.append(j)
+
+# combine list of lists into a single list aka "flatten the list" via list comprehension
+flat_ls = []
+for i in ls:
+    for j in i:
+        flat_ls.append(j)
+# print("this is the flat list of example data strings ",(flat_ls)) # output is a single list of strings
+
+depth = 0
+horizontal = 0
+for items in flat_ls:
+    #split the string
+    direction = items[0]
+    step_string = items[-1]
+    step = int(step_string)
+
+    if direction == "f":
+        horizontal += step
+    if direction == "d":
+        depth  += step
+    if direction == "u":
+        depth  += -step
+print ("horizontal = ", horizontal)
+print("depth = ", depth)
+
+solution = depth * horizontal
+print("part 1 solution = depth x horizontzal = ", solution)
+  
+# +_+_+_+_+_+_+_  part 2 +_+_+_+_+_+__
+# position = horizontal * depth
+aim = 0
+depth = 0
+horizontal = 0
+for items in flat_ls:
+    #split the string
+    direction = items[0]
+    step_string = items[-1]
+    step = int(step_string)
+    
+    if direction == "f" and aim == 0:   # this does not work
+        horizontal += step
+        depth = aim * step
+    if direction == "f" and aim != 0 :
+        horizontal += step 
+        depth += aim * step
+        
+    elif direction == "d":
+        aim += step
+    elif direction == "u":
+        aim -=step
+   
+solution = depth * horizontal
+print("part 2 solution = depth x horizontzal = ", solution)
+  
+
 
 # +_+_+_+_+_+_ day 3 _+_+_+_+_+_+_
+
 day3_data_path = ("input_data/day3.txt")
 day3_example_data_path = ("input_data/day3_example.txt")
-
+ 
 def data_str_list(data_path):
      data_list = []  # a list of binary strings
      f = open(data_path)
@@ -122,24 +205,24 @@ def data_str_list(data_path):
           # print(data_file)
      return data_list
 
-# example_data_list = data_str_list(day3_example_data_path)
+example_data_list = data_str_list(day3_example_data_path)
 # print(example_data_list)
-day3_data_list = data_str_list(day3_data_path)
-print(day3_data_list)
-
+# day3_data_list = data_str_list(day3_data_path)
+# print(day3_data_list)
 
  
+# ----------  part1 
 def binary_strings (my_list, bit_position):
     gamma = ""   # not "0b"
     epsilon = ""     # not "0b"
-    for k in range(12):  # 5 for example data, 12 for actual data
+    for k in range(5):  # 5 for example data, 12 for actual data
         column_counter = 0
 
         for item in my_list:
             bit_position = k
             # column_counter += item([bit_position])  # TypeError: 'str' object is not callable
             column_counter += (int(item [bit_position]))
-            #the line above returnred "ValueError: invalid literal for int() with base 10: 'i' "
+            # the line above returnred "ValueError: invalid literal for int() with base 10: 'i' "
             # although it did not return an error using day3_example data
             # print("column_counter = ",column_counter)
             if column_counter >= (len(my_list)/2):
@@ -163,10 +246,30 @@ def binary_strings (my_list, bit_position):
     power_consumption = gamma_rate * epsilon_rate
     print("power consumption = ", power_consumption)
     return (gamma, epsilon)
- 
-# my_list = example_data_list
-my_list = day3_data_list
-binary_strings(my_list,0)
+
+# =-=-=-=-=- part 2
+my_data_path = "/Users/rsq2/Code_projects/2021-Challenge/input_data/day3_example.txt"
+"""  entered earlier  - redundant 
+# call the class
+aoc = AOC2021(data_path = my_data_path) 
+# write a method to print a column of binary strings without losing the leading zeros  
+    def open_binary_list(self):
+        data_list = []
+        f = open(self.data_path)
+        for  line in f:
+            data_list.append(line.strip())
+            # print(data_file)
+        return data_list
+  entered earlier  - redundant """
+
+
+
+# call the method
+my_list = (aoc.open_binary_list())
+print(my_list)
+bit_position = len(my_list)
+sort_binary_list = (aoc.sort_binary_list(my_list, bit_position))
+
 
 
 """   using example data returned
@@ -174,44 +277,20 @@ gamma =  10110 epsilon =  01001
 gamma_rate =  22
 epsilon_rate =  9
 power consumption =  198
-which is correct
+which is correct for part 1
+
+# using day3.txt returned
+gamma =  010100111001 epsilon =  101011000110
+gamma_rate =  3903
+epsilon_rate =  192
+power consumption =  749376
+which is correct for part 1 
+
+#=-=-  expected result for part 2 is
+gamma_rate = 23
+epsilon_rate = 10
+life_support =230
 
 """ 
-
-""" using day3.txt returned
-gamma =  010100111001 epsilon =  101011000110
-gamma_rate =  1337
-epsilon_rate =  2758
-power consumption =  3687446
-which is correct
-"""
-
-"""     open data file as str
-filename = day3_example_data_path
-file = open(filename, mode ="r")
-text = file.read()
-print(file.close)
-print(text)
-  this prints a column of strings without losing the leading zeros   """ 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
